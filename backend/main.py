@@ -1,11 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from passlib.context import CryptContext
 import sqlite3
 import os
 from typing import List
+from fastapi import FastAPI, HTTPException, Response
 
 app = FastAPI()
 
@@ -84,7 +86,17 @@ def login(user: User):
     row = c.fetchone()
     if not row or not pwd_context.verify(user.password, row[0]):
         raise HTTPException(status_code=401, detail="Nieprawidłowy login lub hasło")
-    return {"username": user.username}
+
+    response = JSONResponse(content={"message": "Zalogowano pomyślnie",
+                                        "username": user.username})
+    response.set_cookie(
+        key="username",
+        value=user.username,
+        httponly=False,   # 👈 zmień na False, żeby JS mógł odczytać cookie
+        samesite="lax"
+    )
+    return response
+
 
 @app.post("/api/history/{username}")
 def add_history(username: str, item: HistoryItem):

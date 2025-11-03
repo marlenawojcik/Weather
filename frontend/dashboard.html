@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard – Weather Module</title>
+<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+<h1>Dashboard – Weather Module</h1>
+<p>Witaj, <span id="usernameDisplay"></span>!</p>
+
+<div id="controls">
+  <input type="text" id="cityInput" placeholder="Wpisz miasto">
+  <button id="searchBtn">Szukaj</button>
+  
+  <div id="layerSelector">
+    <label><input type="radio" name="weatherLayer" value="temp" checked> Temperatura</label>
+    <label><input type="radio" name="weatherLayer" value="rain"> Opady</label>
+    <label><input type="radio" name="weatherLayer" value="clouds"> Zachmurzenie</label>
+    <label><input type="radio" name="weatherLayer" value="wind"> Wiatr</label>
+  </div>
+</div>
+
+<div id="weatherInfo"></div>
+<div id="map"></div>
+<div id="legendContainer"></div>
+
+<h3>Historia wyszukiwań:</h3>
+<ul id="historyList"></ul>
+
+<script src="/static/app_dashboard.js"></script>
+</body>
+</html>
