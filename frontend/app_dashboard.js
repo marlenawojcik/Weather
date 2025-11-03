@@ -29,11 +29,19 @@ const legends = {
   wind:`<b>Wiatr (m/s)</b><div class="legend-container"><div class="legend-bar legend-wind-bar"></div><div class="legend-labels"><span>0</span><span>5</span><span>10</span><span>20+</span></div></div>`
 };
 
-function switchLayer(name){
-  Object.values(layers).forEach(l=>map.removeLayer(l));
-  map.addLayer(layers[name]);
-  document.getElementById("legendContainer").innerHTML = legends[name];
+function switchLayer(name) {
+  // usuń wszystkie nakładki
+  Object.values(layers).forEach(l => map.removeLayer(l));
+
+  // jeśli wybrano coś innego niż "none" – dodaj nakładkę
+  if (name !== "none") {
+    map.addLayer(layers[name]);
+    document.getElementById("legendContainer").innerHTML = legends[name];
+  } else {
+    document.getElementById("legendContainer").innerHTML = ""; // usuń legendę
+  }
 }
+
 
 document.querySelectorAll('input[name="weatherLayer"]').forEach(radio=>{
   radio.addEventListener('change', e=>switchLayer(e.target.value));
@@ -72,7 +80,18 @@ document.getElementById("searchBtn").addEventListener("click", async ()=>{
     if(data.cod!==200){ document.getElementById("weatherInfo").innerText="Nie znaleziono miasta!"; return; }
 
     const {coord, main, weather, wind, name} = data;
+// 🔹 Pobieramy też jakość powietrza po współrzędnych
+const airRes = await fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${coord.lat}&lon=${coord.lon}&appid=${API_KEY}`);
+const airData = await airRes.json();
+const aqi = airData.list[0].main.aqi;
 
+const aqiLevels = {
+  1: "Bardzo dobra 😊",
+  2: "Dobra 🙂",
+  3: "Umiarkowana 😐",
+  4: "Zła 😷",
+  5: "Bardzo zła ☠️"
+};
     document.getElementById("weatherInfo").innerHTML=`
       <h2>${name}</h2>
       <p>${weather[0].description}</p>
@@ -81,6 +100,7 @@ document.getElementById("searchBtn").addEventListener("click", async ()=>{
       <p>Ciśnienie: ${main.pressure} hPa</p>
       <p>Wiatr: ${wind.speed} m/s</p>
       <p>📍 Współrzędne: [${coord.lat.toFixed(2)}, ${coord.lon.toFixed(2)}]</p>
+      <p>🌫️ Jakość powietrza (AQI): ${aqiLevels[aqi]}</p>
     `;
 
     map.setView([coord.lat, coord.lon],10);
