@@ -16,15 +16,28 @@ let map = L.map("map", { center:[52.0,19.0], zoom:6, layers:[baseLayer,tempLayer
 const layers = { temp: tempLayer, rain: rainLayer, clouds: cloudsLayer, wind: windLayer };
 
 const legends = {
-  temp:`<b>Temperatura (°C)</b><div class="legend-bar legend-temp-bar"></div>
-        <div class="legend-labels"><span>-20</span><span>0</span><span>20</span><span>40+</span></div>`,
-  rain:`<b>Opady (mm/h)</b><div class="legend-bar legend-rain-bar"></div>
-        <div class="legend-labels"><span>0</span><span>2</span><span>5</span><span>10+</span></div>`,
-  clouds:`<b>Zachmurzenie (%)</b><div class="legend-bar legend-clouds-bar"></div>
-        <div class="legend-labels"><span>0%</span><span>25%</span><span>50%</span><span>100%</span></div>`,
-  wind:`<b>Wiatr (m/s)</b><div class="legend-bar legend-wind-bar"></div>
-        <div class="legend-labels"><span>0</span><span>5</span><span>10</span><span>20+</span></div>`
+  temp:`<b>Temperatura (°C)</b>
+        <div class="legend-container">
+          <div class="legend-bar legend-temp-bar"></div>
+          <div class="legend-labels"><span>-20</span><span>0</span><span>20</span><span>40+</span></div>
+        </div>`,
+  rain:`<b>Opady (mm/h)</b>
+        <div class="legend-container">
+          <div class="legend-bar legend-rain-bar"></div>
+          <div class="legend-labels"><span>0</span><span>2</span><span>5</span><span>10+</span></div>
+        </div>`,
+  clouds:`<b>Zachmurzenie (%)</b>
+        <div class="legend-container">
+          <div class="legend-bar legend-clouds-bar"></div>
+          <div class="legend-labels"><span>0%</span><span>25%</span><span>50%</span><span>100%</span></div>
+        </div>`,
+  wind:`<b>Wiatr (m/s)</b>
+        <div class="legend-container">
+          <div class="legend-bar legend-wind-bar"></div>
+          <div class="legend-labels"><span>0</span><span>5</span><span>10</span><span>20+</span></div>
+        </div>`
 };
+
 
 function switchLayer(name){
   Object.values(layers).forEach(l=>map.removeLayer(l));
