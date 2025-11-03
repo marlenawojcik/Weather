@@ -36,6 +36,7 @@ const legends = {
           <div class="legend-bar legend-wind-bar"></div>
           <div class="legend-labels"><span>0</span><span>5</span><span>10</span><span>20+</span></div>
         </div>`
+
 };
 
 
@@ -68,6 +69,7 @@ document.getElementById("searchBtn").addEventListener("click", async ()=>{
       <p>Wilgotność: ${main.humidity} %</p>
       <p>Ciśnienie: ${main.pressure} hPa</p>
       <p>Wiatr: ${wind.speed} m/s</p>
+      <p>📍 Współrzędne: [${coord.lat.toFixed(2)}, ${coord.lon.toFixed(2)}]</p>
     `;
 
     map.setView([coord.lat, coord.lon],10);

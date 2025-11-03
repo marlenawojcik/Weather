@@ -13,10 +13,10 @@ document.getElementById("usernameDisplay").innerText = username || "Gość";
 
 // Nakładki mapy
 let baseLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
-let tempLayer = L.tileLayer(`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {opacity:0.6});
-let rainLayer = L.tileLayer(`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {opacity:0.6});
-let cloudsLayer = L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {opacity:0.6});
-let windLayer = L.tileLayer(`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {opacity:0.6});
+let tempLayer = L.tileLayer(`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {opacity:1.0});
+let rainLayer = L.tileLayer(`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {opacity:1.0});
+let cloudsLayer = L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {opacity:1.0});
+let windLayer = L.tileLayer(`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {opacity:1.0});
 
 let map = L.map("map", { center:[52.0,19.0], zoom:6, layers:[baseLayer,tempLayer] });
 
@@ -80,6 +80,7 @@ document.getElementById("searchBtn").addEventListener("click", async ()=>{
       <p>Wilgotność: ${main.humidity} %</p>
       <p>Ciśnienie: ${main.pressure} hPa</p>
       <p>Wiatr: ${wind.speed} m/s</p>
+      <p>📍 Współrzędne: [${coord.lat.toFixed(2)}, ${coord.lon.toFixed(2)}]</p>
     `;
 
     map.setView([coord.lat, coord.lon],10);
