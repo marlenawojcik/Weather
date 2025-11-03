@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Logowanie – Weather Module</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<h1>Logowanie</h1>
+
+<form id="loginForm">
+  <label>Login:</label>
+  <input type="text" id="username" required><br><br>
+  
+  <label>Hasło:</label>
+  <input type="password" id="password" required><br><br>
+  
+  <button type="submit">Zaloguj</button>
+</form>
+
+<div id="message"></div>
+<p><a href="/">Powrót na stronę główną</a></p>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  const res = await fetch("/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  });
+
+  const msgDiv = document.getElementById("message");
+
+  if(res.ok){
+    const data = await res.json();
+    msgDiv.innerText = `Zalogowano jako ${data.username}`;
+    // Przekierowanie do dashboard
+    setTimeout(() => { window.location.href = "/dashboard"; }, 1000);
+  } else {
+    const error = await res.json();
+    msgDiv.innerText = `Błąd: ${error.detail}`;
+  }
+});
+</script>
+</body>
+</html>

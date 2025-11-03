@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Weather Module – Polska</title>
+<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+<h1>Weather Module – Polska</h1>
+
+<div id="controls">
+  <input type="text" id="cityInput" placeholder="Wpisz miasto">
+  <button id="searchBtn">Szukaj</button>
+
+  <div id="layerSelector">
+    <label><input type="radio" name="weatherLayer" value="temp" checked> Temperatura</label>
+    <label><input type="radio" name="weatherLayer" value="rain"> Opady</label>
+    <label><input type="radio" name="weatherLayer" value="clouds"> Zachmurzenie</label>
+    <label><input type="radio" name="weatherLayer" value="wind"> Wiatr</label>
+  </div>
+
+  <div id="authButtons">
+    <button onclick="location.href='/login'">Logowanie</button>
+    <button onclick="location.href='/register'">Rejestracja</button>
+  </div>
+</div>
+
+<div id="weatherInfo"></div>
+<div id="map"></div>
+<div id="legendContainer"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

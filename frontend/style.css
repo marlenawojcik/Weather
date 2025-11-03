@@ -1,0 +1,12 @@
+body { font-family: Arial; margin: 20px; }
+#map { height: 500px; margin-top: 20px; }
+#controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+#weatherInfo { margin-top: 10px; }
+#layerSelector { margin-left: 20px; }
+.legend-bar { height: 20px; width: 200px; margin: 5px 0; }
+.legend-labels { display: flex; justify-content: space-between; font-size: 12px; }
+.legend-temp-bar { background: linear-gradient(to right, blue, yellow, red); }
+.legend-clouds-bar { background: linear-gradient(to right, #ffffff, #888888, #000000); }
+.legend-rain-bar { background: linear-gradient(to right, #e0f7fa, #00bcd4, #006064); }
+.legend-wind-bar { background: linear-gradient(to right, #fff, #0f0, #00f); }
+#legendContainer { margin-top: 10px; }
