@@ -11,3 +11,13 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 
 3. Powinien wygenerowac się link, klikij go (Ctrl+click) i powinna sie otworzyc strona w internecie
+
+
+
+
+
+info
+mapa bazowa: OpenStreetMap
+nakłądki:OpenWeatherMap
+Leaflet to lekka biblioteka JavaScript do interaktywnych map.
+Nie rysuje mapy sam — tylko pobiera gotowe kafelki (tiles) z różnych źródeł (np. OpenStreetMap, OpenWeatherMap) i układa je w interaktywną mapę, na której można:

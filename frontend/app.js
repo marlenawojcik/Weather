@@ -59,7 +59,7 @@ document.querySelectorAll('input[name="weatherLayer"]').forEach(radio=>{
 });
 
 // domyślnie temperatura
-switchLayer("temp");
+switchLayer("none");
 
 document.getElementById("searchBtn").addEventListener("click", async ()=>{
   const city = document.getElementById("cityInput").value;

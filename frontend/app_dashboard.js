@@ -47,7 +47,7 @@ document.querySelectorAll('input[name="weatherLayer"]').forEach(radio=>{
   radio.addEventListener('change', e=>switchLayer(e.target.value));
 });
 
-switchLayer("temp");
+switchLayer("none");
 
 // Historia wyszukiwań
 async function loadHistory(){
