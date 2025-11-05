@@ -15,9 +15,7 @@ app = FastAPI()
 # Ścieżka do frontend
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "../frontend")
 
-print("Frontend DIR:", FRONTEND_DIR)
-print("index.html exists?", os.path.exists(os.path.join(FRONTEND_DIR, "index.html")))
-print("login.html exists?", os.path.exists(os.path.join(FRONTEND_DIR, "login.html")))
+
 
 # Serwowanie statycznych plików JS/CSS
 app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
@@ -92,7 +90,7 @@ def login(user: User):
     response.set_cookie(
         key="username",
         value=user.username,
-        httponly=False,   # 👈 zmień na False, żeby JS mógł odczytać cookie
+        httponly=False,   #False, żeby JS mógł odczytać cookie
         samesite="lax"
     )
     return response
