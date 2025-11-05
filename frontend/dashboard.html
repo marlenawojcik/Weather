@@ -12,6 +12,23 @@
 <h1>Dashboard – Weather Module</h1>
 <p>Witaj, <span id="usernameDisplay"></span>!</p>
 
+<!-- 🔽 Panel użytkownika -->
+<div id="userPanel" class="panel">
+  <button id="togglePanelBtn">☰ Panel użytkownika</button>
+  <div id="panelContent" class="hidden">
+    <button id="setDefaultBtn">🏠 Ustaw domyślne miasto</button>
+    <div class="history-section">
+      <button id="toggleHistoryBtn">📜 Historia wyszukiwania ▼</button>
+      <div id="historyOptions" class="hidden">
+        <button id="showHistoryBtn">👁️ Pokaż historię</button>
+        <button id="clearHistoryBtn">🗑️ Usuń historię</button>
+      </div>
+    </div>
+    <button id="logoutBtn">🚪 Wyloguj</button>
+    <button id="deleteAccountBtn" class="danger">❌ Usuń konto</button>
+  </div>
+</div>
+
 <div id="controls">
   <input type="text" id="cityInput" placeholder="Wpisz miasto">
   <button id="searchBtn">Szukaj</button>

@@ -117,3 +117,63 @@ def get_history(username: str):
     c.execute("SELECT city FROM history WHERE user_id=? ORDER BY id DESC", (user_id,))
     cities = c.fetchall()
     return [{"city": city[0]} for city in cities]
+
+
+#ustaw domysle miasto
+@app.post("/api/default_city/{username}")
+def set_default_city(username: str, item: HistoryItem):
+    c.execute("SELECT id FROM users WHERE username=?", (username,))
+    row = c.fetchone()
+    if not row:
+        raise HTTPException(status_code=404, detail="Użytkownik nie istnieje")
+    user_id = row[0]
+    # Dodaj kolumnę default_city jeśli nie istnieje
+    c.execute("ALTER TABLE users ADD COLUMN default_city TEXT") if "default_city" not in [col[1] for col in c.execute("PRAGMA table_info(users)").fetchall()] else None
+    c.execute("UPDATE users SET default_city=? WHERE id=?", (item.city, user_id))
+    conn.commit()
+    return {"message": f"Ustawiono domyślne miasto na {item.city}"}
+
+#pobierz najczesciej wyszukiwane miasta
+@app.get("/api/top_cities/{username}")
+def get_top_cities(username: str, limit: int = 5):
+    c.execute("SELECT id FROM users WHERE username=?", (username,))
+    row = c.fetchone()
+    if not row:
+        raise HTTPException(status_code=404, detail="Użytkownik nie istnieje")
+    user_id = row[0]
+    c.execute("""
+        SELECT city, COUNT(*) as count 
+        FROM history 
+        WHERE user_id=? 
+        GROUP BY city 
+        ORDER BY count DESC 
+        LIMIT ?
+    """, (user_id, limit))
+    cities = c.fetchall()
+    return [city[0] for city in cities]
+
+# 🔹 Usuń historię
+@app.delete("/api/history/{username}")
+def delete_history(username: str):
+    c.execute("SELECT id FROM users WHERE username=?", (username,))
+    row = c.fetchone()
+    if not row:
+        raise HTTPException(status_code=404, detail="Użytkownik nie istnieje")
+    user_id = row[0]
+    c.execute("DELETE FROM history WHERE user_id=?", (user_id,))
+    conn.commit()
+    return {"message": "Historia została usunięta"}
+
+
+# 🔹 Usuń konto
+@app.delete("/api/user/{username}")
+def delete_user(username: str):
+    c.execute("SELECT id FROM users WHERE username=?", (username,))
+    row = c.fetchone()
+    if not row:
+        raise HTTPException(status_code=404, detail="Użytkownik nie istnieje")
+    user_id = row[0]
+    c.execute("DELETE FROM history WHERE user_id=?", (user_id,))
+    c.execute("DELETE FROM users WHERE id=?", (user_id,))
+    conn.commit()
+    return {"message": "Konto zostało usunięte"}

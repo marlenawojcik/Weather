@@ -27,3 +27,9 @@ body { font-family: Arial; margin: 20px; }
 .legend-rain-bar { background: linear-gradient(to right, #e0f7fa, #00bcd4, #006064); }
 .legend-wind-bar { background: linear-gradient(to right, #fff, #0f0, #00f); }
 #legendContainer { margin-top: 10px; }
+
+.panel { margin-bottom: 10px; }
+.hidden { display: none; }
+.panel button { margin: 4px; padding: 6px 10px; cursor: pointer; }
+button.danger { background-color: #d9534f; color: white; }
+

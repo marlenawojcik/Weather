@@ -1,6 +1,6 @@
 
 // Pobieranie klucza z .env (FastAPI nie odczyta .env w JS, więc trzeba wrzucić do JS przez backend lub inline)
-// Na razie wstaw wprost:
+// Na razie wprost:
 const API_KEY = "25ae8c36b22398f35b25584807571f27";
 const API_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
 
@@ -101,3 +101,6 @@ const aqiLevels = {
 
   }catch(err){ console.error(err); alert("Błąd pobierania danych pogodowych!"); }
 });
+
+
+

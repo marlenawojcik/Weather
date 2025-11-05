@@ -66,8 +66,40 @@ async function loadHistory(){
   }catch(err){ console.error(err); }
 }
 
-loadHistory();
+//loadHistory();
 
+
+
+
+
+// 🔹 Podpowiedzi miast
+const cityInput = document.getElementById("cityInput");
+const suggestionBox = document.createElement("div");
+suggestionBox.id = "suggestionBox";
+suggestionBox.style.position = "absolute";
+suggestionBox.style.background = "white";
+suggestionBox.style.border = "1px solid gray";
+suggestionBox.style.zIndex = "999";
+suggestionBox.style.display = "none";
+cityInput.parentNode.appendChild(suggestionBox);
+
+cityInput.addEventListener("focus", async () => {
+  const res = await fetch(`/api/top_cities/${username}`);
+  if (res.ok) {
+    const cities = await res.json();
+    suggestionBox.innerHTML = cities.map(c => `<div class='suggestion'>${c}</div>`).join("");
+    suggestionBox.style.display = "block";
+    document.querySelectorAll(".suggestion").forEach(el => {
+      el.addEventListener("click", () => {
+        cityInput.value = el.textContent;
+        suggestionBox.style.display = "none";
+      });
+    });
+  }
+});
+cityInput.addEventListener("blur", () => {
+  setTimeout(() => suggestionBox.style.display = "none", 200);
+});
 
 
 // Wyszukiwanie miasta
@@ -117,4 +149,55 @@ const aqiLevels = {
 
     loadHistory(); // odśwież historię
   }catch(err){ console.error(err); alert("Błąd pobierania danych pogodowych!"); }
+});
+
+
+//obsługa panelu użytkownika
+const panelContent = document.getElementById("panelCotent");
+document.getElementById("togglePanelBtn").addEventListener("click", () => {
+  panelContent.classList.toggle("hidden");
+});
+
+document.getElementById("toggleHistoryBtn").addEventListener("click", () => {
+  document.getElementById("historyOptions").classList.toggle("hidden");
+});
+
+// 🏠 Ustaw domyślne miasto
+document.getElementById("setDefaultBtn").addEventListener("click", async () => {
+  const city = prompt("Podaj nazwę miasta, które chcesz ustawić jako domyślne:");
+  if (!city) return;
+  await fetch(`/api/default_city/${username}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ city })
+  });
+  alert("Domyślne miasto ustawione!");
+});
+
+// 📜 Pokaż historię
+document.getElementById("showHistoryBtn").addEventListener("click", loadHistory);
+
+// 🗑️ Usuń historię
+document.getElementById("clearHistoryBtn").addEventListener("click", async () => {
+  if (confirm("Na pewno chcesz usunąć historię wyszukiwania?")) {
+    await fetch(`/api/history/${username}`, { method: "DELETE" });
+    loadHistory();
+    alert("Historia usunięta.");
+  }
+});
+
+// 🚪 Wyloguj
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  document.cookie = "username=; Max-Age=0; path=/;";
+  window.location.href = "/login";
+});
+
+// ❌ Usuń konto
+document.getElementById("deleteAccountBtn").addEventListener("click", async () => {
+  if (confirm("Czy na pewno chcesz trwale usunąć swoje konto?")) {
+    await fetch(`/api/user/${username}`, { method: "DELETE" });
+    document.cookie = "username=; Max-Age=0; path=/;";
+    alert("Konto usunięte.");
+    window.location.href = "/";
+  }
 });
